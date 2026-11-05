@@ -1,3 +1,6 @@
 {
+  "name": "packetencoder",
+  "description": "Reliable framing of packetized data over byte streams (serial/UART)",
+  "license": "MIT",
   "type": "module"
 }
