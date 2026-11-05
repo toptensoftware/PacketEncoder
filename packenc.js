@@ -11,7 +11,7 @@ function var_len_enc(value, callback, bit)
 {
     if (value > 127)
     {
-        var_len_enc(value >> 7, callback, 0x80);
+        var_len_enc(value >>> 7, callback, 0x80);
     }
     callback((value & 0x7F) | bit);
 }
@@ -95,7 +95,6 @@ export function packet_decoder(callback, error, maxlength)
 
     return function receive_byte(data)
     {
-        process.stdout.write(`0x${data.toString(16)}, `)
         // Monitoring for signal happens even while decoding packets
         // and if seen discards the current packet and starts a new one
         if (data == signal_byte)
@@ -124,8 +123,11 @@ export function packet_decoder(callback, error, maxlength)
                 signal_bytes_seen = 0;
 
                 if (data != stuff_byte)
+                {
+                    error && error(`discarded packet: invalid stuff byte 0x${data.toString(16)}`);
                     state = "waiting_signal";
-                else
+                }
+                else if (state != "expect_crc" || count == 0)
                     crcCalc = crc32_update(crcCalc, data);
                 return;
             }

@@ -1,5 +1,3 @@
-#include <malloc.h>
-
 #include "packenc.h"
 #include "crc32.h"
 

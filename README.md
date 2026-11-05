@@ -376,9 +376,6 @@ gcc -I. -o packtest test/main.c packenc.c crc32.c
 # PACKET: seq: 102 cmd: 3 data: 6 bytes
 ```
 
-(At the moment `test/main.c` declares the context as `struct decode_context`,
-which needs changing to `decode_context` before it will compile.)
-
 ---
 
 ## License
